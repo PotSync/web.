@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Soporte | PotSync</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4fff6;
+      color: #1a1a1a;
+      margin: 0;
+    }
+
+    header {
+      background-color: #7fd6a6;
+      padding: 20px;
+      color: white;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 28px;
+    }
+
+    nav {
+      background-color: #eafbf1;
+      padding: 10px 20px;
+      display: flex;
+      justify-content: space-around;
+    }
+
+    nav a {
+      text-decoration: none;
+      color: #1a1a1a;
+      font-weight: bold;
+    }
+
+    section {
+      padding: 40px 20px;
+    }
+
+    .soporte-container {
+      max-width: 1000px;
+      margin: 0 auto;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 40px;
+      justify-content: center;
+    }
+
+    .soporte-box, .contacto-box {
+      background-color: #ffffff;
+      border: 1px solid #d0e9da;
+      border-radius: 8px;
+      padding: 30px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      flex: 1 1 400px;
+    }
+
+    .soporte-box h2, .contacto-box h2 {
+      color: #31D4AF;
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      margin-top: 15px;
+      font-weight: bold;
+    }
+
+    input, textarea {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 14px;
+    }
+
+    button {
+      margin-top: 20px;
+      padding: 12px 25px;
+      background-color: #31D4AF;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #28b89a;
+    }
+
+    .contacto-box p {
+      font-size: 16px;
+      margin-bottom: 10px;
+    }
+
+    .contacto-box a {
+      color: #31D4AF;
+      text-decoration: none;
+    }
+
+    footer {
+      background-color: #7fd6a6;
+      text-align: center;
+      color: white;
+      padding: 10px;
+      margin-top: 40px;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>PotSync - Soporte Técnico</h1>
+  </header>
+
+  <nav>
+    <a href="index.html">Inicio</a>
+    <a href="catalogo.html">Catálogo</a>
+    <a href="equipo.html">Equipo</a>
+    <a href="contacto.html">Contacto</a>
+    <a href="soporte.html">Soporte</a>
+  </nav>
+
+  <section>
+    <div class="soporte-container">
+      <!-- Formulario -->
+      <div class="soporte-box">
+        <h2>¿En qué podemos ayudarte?</h2>
+        <p>Completa el formulario y nuestro equipo te responderá lo antes posible.</p>
+        <form>
+          <label for="nombre">Nombre</label>
+          <input type="text" id="nombre" name="nombre" required>
+
+          <label for="correo">Correo electrónico</label>
+          <input type="email" id="correo" name="correo" required>
+
+          <label for="producto">Producto</label>
+          <input type="text" id="producto" name="producto" placeholder="Ej. Maceta EcoSync, Sensor IoT...">
+
+          <label for="mensaje">Mensaje</label>
+          <textarea id="mensaje" name="mensaje" rows="5" placeholder="Describe tu problema o consulta..."></textarea>
+
+          <button type="submit">Enviar mensaje</button>
+        </form>
+      </div>
+
+      <!-- Contacto directo -->
+      <div class="contacto-box">
+        <h2>Contacto Directo</h2>
+        <p><strong>Correo:</strong> <a href="mailto:soporte@potsync.com">soporte@potsync.com</a></p>
+        <p><strong>Teléfono:</strong> +52 55 1234 5678</p>
+        <p><strong>WhatsApp:</strong> <a href="https://wa.me/5215512345678" target="_blank">Envíanos un mensaje</a></p>
+        <p><strong>Horario de atención:</strong> Lunes a Viernes, 9:00 a.m. - 6:00 p.m.</p>
+        <p><strong>Dirección:</strong> CDMX, México</p>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    &copy; 2025 PotSync | Todos los derechos reservados
+  </footer>
+
+</body>
+</html>
