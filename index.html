@@ -69,6 +69,17 @@
                 <input type="submit" value="Enviar" class="btn">
             </fieldset>
         </section>
+        <section id="chatbot" style="margin-top: 40px;">
+  <h3>🤖 Asistente PotSync</h3>
+  <div id="chatbox" style="border: 1px solid #ccc; height: 300px; overflow-y: scroll; padding: 10px; background: #fff; color: black;"></div>
+  <input
+    type="text"
+    id="userInput"
+    placeholder="¿En qué te podemos ayudar?"
+    style="width: 80%; padding: 10px; margin-top: 10px; color: black; background-color: #fff; border: 1px solid #ccc;"
+  >
+  <button onclick="responderFAQ()">Enviar</button>
+</section>
 
         <section class="redes">
             <a href="https://api.whatsapp.com/send/?phone=527841183967" target="_blank">
@@ -86,6 +97,83 @@
     <footer>
         © 2024 PotSync. Todos los derechos reservados.
     </footer>
+
+    <script>
+  const respuestas = {
+    "hola":"Hola, en que te podemos ayudar.",
+   
+    "catalogo":"Ofrecemos Maceta Inteligente EcoSync, Sistema de Riego Automático, Sensor Ambiental IoT, Maceta Clásica PotSync, Maceta Moderna Minimalista, Kit de Jardinería Básico, Controlador WiFi de Plantas, Maceta de Exterior Reforzada, Aspersor Inteligente, Mini Invernadero IoT.",
+    "productos":"Ofrecemos Maceta Inteligente EcoSync, Sistema de Riego Automático, Sensor Ambiental IoT, Maceta Clásica PotSync, Maceta Moderna Minimalista, Kit de Jardinería Básico, Controlador WiFi de Plantas, Maceta de Exterior Reforzada, Aspersor Inteligente, Mini Invernadero IoT.",
+    "catalogo de productos":"Ofrecemos Maceta Inteligente EcoSync, Sistema de Riego Automático, Sensor Ambiental IoT, Maceta Clásica PotSync, Maceta Moderna Minimalista, Kit de Jardinería Básico, Controlador WiFi de Plantas, Maceta de Exterior Reforzada, Aspersor Inteligente, Mini Invernadero IoT.",
+    "maceta inteligente ecosync":"Maceta inteligente ecosync: Controla humedad, luz y temperatura desde tu móviol - $699 MXN",
+    "maceta inteligente":"Maceta inteligente ecosync:Controla humedad, luz y temperatura desde tu móviol - $699 MXN",
+
+    "sistema de riego automático":"Riego programado inteligente para jardines - $899 MXN",
+    "sistema de riego ":"Sistema de riego automático: Riego programado inteligente para jardines - $899 MXN",
+
+    "sensor ambiental iot":"Mide condiciones en tiempo real para tus plantas - $499 MXN",
+    "sensor ambiental":"Sensor ambiental iot: Mide condiciones en tiempo real para tus plantas - $499 MXN",
+
+    "maceta clasica potsync":"Diseño estético, sin componentes electrónicos - $199 MXN",
+     "maceta clasica":"Maceta clásica potsync: Diseño estético, sin componentes electrónicos - $199 MXN",
+
+    "maceta moderna minimalista":"Ideal para espacios interiores contemporáneos - $249 MXN",
+    "maceta moderna ":"Maceta moderna minimalista: Ideal para espacios interiores contemporáneos - $249 MXN",
+
+    "maceta":"Maceta moderna minimalista, Maceta clásica PotSync, Maceta inteligente EcoSync o Maceta de exterior reforzada.",
+    "macetas":"Maceta moderna minimalista, Maceta clásica PotSync, Maceta inteligente EcoSync o Maceta de exterior reforzada?",
+
+    "kit de jardinería basico":"Incluye palita, guantes y maceta de muestra - $349 MXN",
+    "kit":"Kit de jardineria basico: Incluye palita, guantes y maceta de muestra - $349 MXN",
+    "jardineria":"Kit de jardineria basico: Incluye palita, guantes y maceta de muestra - $349 MXN",
+
+    "controlador wifi de plantas":"Automatiza riego y sensores desde el celular - $599 MXN",
+    "controlador":"Controlador wifi de plantas: Automatiza riego y sensores desde el celular - $599 MXN",
+    "controlador wifi":"Controlador wifi de plantas: Automatiza riego y sensores desde el celular - $599 MXN",
+    "wifi":"Controlador wifi de plantas: Automatiza riego y sensores desde el celular - $599 MXN",
+    "plantas":"Controlador wifi de plantas: Automatiza riego y sensores desde el celular - $599 MXN",
+
+    "maceta de exterior reforzada":"Diseñada para clima extremo con material reciclado - $289 MXN",
+    "maceta de exterior ":"Maceta de exterior reforzada: Diseñada para clima extremo con material reciclado - $289 MXN",
+    "exterior ":"Maceta de exterior reforzada: Diseñada para clima extremo con material reciclado - $289 MXN",
+    "reforzada ":"Maceta de exterior reforzada: Diseñada para clima extremo con material reciclado - $289 MXN",
+    "exterior reforzada":"Maceta de exterior reforzada: Diseñada para clima extremo con material reciclado - $289 MXN",
+
+    "aspersor inteligente":"Controla el riego según las condiciones climáticas - $799 MXN",
+    "aspersor":"Aspersor inteligente: Controla el riego según las condiciones climáticas - $799 MXN",
+
+    "mini invernadero iot":"Ideal para cultivar hierbas y vegetales en casa - $1299 MXN",
+    "mini":"Mini invernadero IoT: Ideal para cultivar hierbas y vegetales en casa - $1299 MXN",
+    "invernadero":"Mini invernadero IoT: Ideal para cultivar hierbas y vegetales en casa - $1299 MXN",
+
+
+    "enviar": "Sí, contamos con envíos ecológicos en empaques biodegradables.",
+    "contacto": "Puedes contactarnos desde el formulario en la parte inferior o a través de nuestras redes sociales.",
+    "equipo": "Nuestro equipo está formado por expertos en tecnología, ecología y diseño sostenible.",
+    "precio": "Puedes consultar precios actualizados en el catálogo. ¡Tenemos una oferta de lanzamiento del 10% de descuento!",
+    "oferta": "¡Sí! Por lanzamiento, tenemos un 10% de descuento en todos nuestros productos durante el primer mes.",
+    "soporte": "Puedes escribirnos desde el apartado de Atención al cliente para recibir soporte personalizado, tambien por medio de nuestras redes sociales y correo electrónico.",
+    "atencion al cliente": "Puedes escribirnos desde el apartado de Atención al cliente para recibir soporte personalizado, tambien por medio de nuestras redes sociales y correo electrónico."
+  };
+
+  function responderFAQ() {
+    const input = document.getElementById('userInput').value.toLowerCase();
+    const chatbox = document.getElementById('chatbox');
+    chatbox.innerHTML += `<p><strong>Tú:</strong> ${input}</p>`;
+    document.getElementById('userInput').value = '';
+
+    let respuesta = "Lo siento, no entendí tu pregunta. ¿Podrías reformularla?";
+    for (const palabra in respuestas) {
+      if (input.includes(palabra)) {
+        respuesta = respuestas[palabra];
+        break;
+      }
+    }
+
+    chatbox.innerHTML += `<p><strong>PotSyncBot:</strong> ${respuesta}</p>`;
+    chatbox.scrollTop = chatbox.scrollHeight;
+  }
+</script>
 
 </body>
 </html>
