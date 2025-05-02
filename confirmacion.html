@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Confirmación de Compra</title>
+    <link rel="stylesheet" href="css/carrito.css">
+</head>
+<body>
+    <header>
+        <a href="index.html">
+            <img id="logo" src="img/potsync.png" alt="Logo PotSync">
+        </a>
+        <div>
+            <h1>PotSync</h1>
+            <h3>Carrito </h3>
+        </div>
+    </header>
+
+    <nav>
+        <div class="nav-links">
+            <a href="index.html">Inicio</a>
+            <a href="catalogo.html">Catálogo</a>
+            <a href="equipo.html">Equipo</a>
+            <a href="contacto.html">Contacto</a>
+            
+
+        </div>
+        <a href="carrito.html"><h3>🛒 Ver Carrito</h3></a>
+    </nav>
+    <h1>Desglose Final de la Compra</h1>
+    <p>Subtotal: $<span id="subtotal"></span> MXN</p>
+    <p>IVA (16%): $<span id="iva"></span> MXN</p>
+    <h3>Total: $<span id="total"></span> MXN</h3>
+
+    <button onclick="continuarPago()" style="padding: 10px 20px; background-color: green; color: white; border: none; border-radius: 5px; cursor: pointer;">Continuar al Pago</button>
+
+    <script>
+        // Recupera los datos del resumen y los muestra
+        const resumen = JSON.parse(localStorage.getItem('resumenCompra'));
+        if (resumen) {
+            document.getElementById('subtotal').textContent = resumen.subtotal;
+            document.getElementById('iva').textContent = resumen.iva;
+            document.getElementById('total').textContent = resumen.total;
+        }
+
+        function continuarPago() {
+            window.location.href = 'pago.html'; // siguiente paso
+        }
+    </script>
+</body>
+</html>

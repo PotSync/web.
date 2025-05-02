@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Confirmación de Compra</title>
+    <link rel="stylesheet" href="css/carrito.css">
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 60px auto;
+            background-color: #fff;
+            padding: 30px 40px;
+            border-radius: 15px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #2ecc71;
+        }
+
+        .section {
+            margin-top: 25px;
+        }
+
+        .section h2 {
+            margin-bottom: 10px;
+            color: #333;
+            border-bottom: 2px solid #ddd;
+            padding-bottom: 5px;
+        }
+
+        p {
+            margin: 5px 0;
+            color: #444;
+        }
+
+        .resumen {
+            margin-top: 15px;
+            padding: 15px;
+            background-color: #f9f9f9;
+            border-radius: 10px;
+        }
+
+        .resumen p {
+            font-weight: bold;
+        }
+
+        .resumen span {
+            float: right;
+        }
+
+        .final {
+            text-align: center;
+            margin-top: 30px;
+            font-size: 18px;
+            color: #27ae60;
+        }
+    </style>
+</head>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<body>
+    <header>
+        <a href="index.html">
+            <img id="logo" src="img/potsync.png" alt="Logo PotSync">
+        </a>
+        <div>
+            <h1>PotSync</h1>
+            <h3>Proceso de pago</h3>
+        </div>
+    </header>
+
+    <nav>
+        <div class="nav-links">
+            <a href="index.html">Inicio</a>
+            <a href="catalogo.html">Catálogo</a>
+            <a href="equipo.html">Equipo</a>
+            <a href="contacto.html">Contacto</a>
+            
+
+        </div>
+        <a href="carrito.html"><h3>🛒 Ver Carrito</h3></a>
+    </nav>
+    
+    <div class="container">
+        <h1>¡Gracias por tu compra!</h1>
+
+        <div class="section">
+            <h2>Detalles del cliente</h2>
+            <p><strong>Nombre:</strong> <span id="nombre"></span></p>
+            <p><strong>Email:</strong> <span id="email"></span></p>
+            <p><strong>Dirección:</strong> <span id="direccion"></span></p>
+            <p><strong>Método de pago:</strong> <span id="metodo"></span></p>
+        </div>
+
+        <div class="section resumen">
+            <h2>Resumen de pago</h2>
+            <p>Subtotal: <span id="subtotal"></span></p>
+            <p>IVA (16%): <span id="iva"></span></p>
+            <p>Total: <span id="total"></span></p>
+        </div>
+
+        <div class="final">
+            Tu pedido ha sido procesado exitosamente.
+        </div>
+    </div>
+
+    <div style="text-align: center; margin-top: 20px;">
+    <button onclick="generarTicket()">Descargar Ticket PDF</button>
+    <!-- Botón para volver a la página de inicio -->
+<button id="volverInicio" onclick="vaciarCarritoo()" style="margin-top: 20px; padding: 10px 20px; background-color: #007BFF; color: white; border: none; border-radius: 5px; cursor: pointer;">
+    <a href="index.html">Volver al Inicio🏠</a>
+</button>
+
+
+</div>
+<style>
+    button {
+        background-color: #2ecc71;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        font-size: 16px;
+        border-radius: 8px;
+        cursor: pointer;
+    }
+
+    button:hover {
+        background-color: #27ae60;
+    }
+</style>
+
+
+    <script>
+        // Datos del usuario
+        const datos = JSON.parse(localStorage.getItem('datosPago'));
+        if (datos) {
+            document.getElementById('nombre').textContent = datos.nombre;
+            document.getElementById('email').textContent = datos.email;
+            document.getElementById('direccion').textContent = datos.direccion;
+            document.getElementById('metodo').textContent = datos.metodo;
+        }
+
+        // Datos del carrito
+        const carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+        let subtotal = 0;
+
+        carrito.forEach(item => {
+            subtotal += item.precio * item.cantidad;
+        });
+
+        const iva = subtotal * 0.16;
+        const total = subtotal + iva;
+
+        // Mostrar desglose
+        document.getElementById('subtotal').textContent = `$${subtotal.toFixed(2)} MXN`;
+        document.getElementById('iva').textContent = `$${iva.toFixed(2)} MXN`;
+        document.getElementById('total').textContent = `$${total.toFixed(2)} MXN`;
+    
+     async function generarTicket() {
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF();
+
+        // Generar el número de folio único
+        const folio = `FOLIO-${Date.now()}-${Math.floor(Math.random() * 1000)}`;
+
+        const datos = JSON.parse(localStorage.getItem('datosPago'));
+        const carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+
+        let subtotal = 0;
+        let y = 20;
+
+        doc.setFontSize(18);
+        doc.text("Ticket de Compra", 20, y);
+        y += 10;
+
+        doc.setFontSize(12);
+        doc.text(`Folio: ${folio}`, 20, y);
+        y += 10;
+
+        doc.text(`Fecha: ${new Date().toLocaleString()}`, 20, y);
+        y += 10;
+
+        if (datos) {
+            doc.text(`Nombre: ${datos.nombre}`, 20, y);
+            y += 7;
+            doc.text(`Email: ${datos.email}`, 20, y);
+            y += 7;
+            doc.text(`Dirección: ${datos.direccion}`, 20, y);
+            y += 7;
+            doc.text(`Método de pago: ${datos.metodo}`, 20, y);
+            y += 10;
+        }
+
+        doc.text("Productos:", 20, y);
+        y += 8;
+
+        carrito.forEach(item => {
+            const line = `- ${item.nombre} x${item.cantidad} ($${item.precio.toFixed(2)} c/u)`;
+            doc.text(line, 25, y);
+            subtotal += item.precio * item.cantidad;
+            y += 7;
+        });
+
+        const iva = subtotal * 0.16;
+        const total = subtotal + iva;
+
+        y += 10;
+        doc.text(`Subtotal: $${subtotal.toFixed(2)} MXN`, 20, y);
+        y += 7;
+        doc.text(`IVA (16%): $${iva.toFixed(2)} MXN`, 20, y);
+        y += 7;
+        doc.text(`Total: $${total.toFixed(2)} MXN`, 20, y);
+
+        y += 15;
+        doc.setFontSize(10);
+        doc.text("¡Gracias por tu compra!", 20, y);
+
+        doc.save("ticket_compra.pdf");
+    }
+
+// Función para vaciar el carrito y redirigir al inicio
+function vaciarCarritoo() {
+     localStorage.removeItem('carrito');
+    cargarCarrito();
+
+    // Limpia también los valores de subtotal, IVA y total
+    document.getElementById('subtotal').textContent = '0.00';
+    document.getElementById('iva').textContent = '0.00';
+    document.getElementById('total-general').textContent = '0.00';
+
+   
+}
+    </script>
+</body>
+</html>

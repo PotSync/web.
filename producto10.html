@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Mini Invernadero - PotSync</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <header>
+        <a href="index.html">
+            <img id="logo" src="img/potsync.png" alt="Logo PotSync">
+        </a>
+        <div>
+            <h1>PotSync</h1>
+            <h3>Producto</h3>
+        </div>
+    </header>
+
+    <nav>
+        <div class="nav-links">
+            <a href="index.html">Inicio</a>
+            <a href="catalogo.html">Catálogo</a>
+            <a href="equipo.html">Equipo</a>
+            <a href="contacto.html">Contacto</a>
+            
+
+        </div>
+        <a href="carrito.html"><h3>🛒 Ver Carrito</h3></a>
+    </nav>
+
+<button onclick="volverAtras()" style="padding: 10px 20px; background-color: forestgreen; color: white; border: none; border-radius: 5px; cursor: pointer;">
+    ⬅ Volver al catálogo 
+</button>
+
+    <main style="text-align: center;">
+        <h2>Mini Invernadero IoT</h2>
+        <img src="img/p10.png" alt="Invernadero IoT" style="width:300px;">
+        <p><strong>Precio:</strong> $1299 MXN</p>
+        <p><strong>Descripción:</strong> Ideal para cultivar hierbas y vegetales en casa. </p>
+        <label for="cantidad1">Cantidad:</label>
+        <input type="number" id="cantidad1" name="cantidad" min="1" value="1">
+        <br><br>
+        <button onclick="agregarAlCarrito('Mini Invernadero', 1299, 'cantidad1')">Agregar al carrito</button>
+    </main>
+
+    <footer>© 2024 PotSync. Todos los derechos reservados.</footer>
+
+    <script>
+        function agregarAlCarrito(nombre, precio, inputId) {
+    const cantidad = parseInt(document.getElementById(inputId).value);
+    if (cantidad < 1) return;
+
+    const producto = {
+        nombre,
+        precio,
+        cantidad
+    };
+
+    // Obtener el carrito existente
+    let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+
+    // Verificar si ya existe el producto y sumarle cantidad
+    const index = carrito.findIndex(p => p.nombre === nombre);
+    if (index >= 0) {
+        carrito[index].cantidad += cantidad;
+    } else {
+        carrito.push(producto);
+    }
+
+    // Guardar de nuevo el carrito
+    localStorage.setItem('carrito', JSON.stringify(carrito));
+
+    alert(`Agregaste ${cantidad} unidad(es) de "${nombre}" al carrito.`);
+    window.location.href = 'catalogo.html';
+
+}    
+</script>
+</body>
+</html>

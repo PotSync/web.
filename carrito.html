@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Carrito de Compras</title>
+    <link rel="stylesheet" href="css/carrito.css">
+</head>
+<body>
+     <header>
+        <a href="index.html">
+            <img id="logo" src="img/potsync.png" alt="Logo PotSync">
+        </a>
+        <div>
+            <h1>PotSync</h1>
+            <h3>Carrito </h3>
+        </div>
+    </header>
+
+    <nav>
+        <div class="nav-links">
+            <a href="index.html">Inicio</a>
+            <a href="catalogo.html">Catálogo</a>
+            <a href="equipo.html">Equipo</a>
+            <a href="contacto.html">Contacto</a>
+            
+
+        </div>
+        <a href="carrito.html"><h3>🛒 Ver Carrito</h3></a>
+    </nav>
+    <h1>Carrito de Compras</h1>
+    <table id="tabla-carrito">
+        <thead>
+            <tr>
+                <th>Producto</th>
+                <th>Precio Unitario</th>
+                <th>Cantidad</th>
+                <th>Subtotal</th>
+            </tr>
+        </thead>
+        <tbody id="carrito-body">
+            <!-- Aquí se insertarán los productos -->
+        </tbody>
+    </table>
+    <div id="resumen-compra" style="margin-top: 20px;">
+    <p>Subtotal: $<span id="subtotal">0.00</span> MXN</p>
+    <p>IVA (16%): $<span id="iva">0.00</span> MXN</p>
+    <h3>Total: $<span id="total-general">0.00</span> MXN</h3>
+</div>
+
+    <button onclick="vaciarCarrito()" style="padding: 10px 20px; background-color: crimson; color: white; border: none; border-radius: 5px; cursor: pointer;">
+    Vaciar Carrito
+</button>
+
+<button onclick="confirmarCompra()" style="padding: 10px 20px; background-color: green; color: white; border: none; border-radius: 5px; cursor: pointer;">Confirmar compra</button>
+
+
+
+    <script>
+        function cargarCarrito() {
+    const carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+    const tbody = document.getElementById('carrito-body');
+    const totalDiv = document.getElementById('total-general');
+    let total = 0;
+
+    tbody.innerHTML = '';
+
+    if (carrito.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="5">Tu carrito está vacío.</td></tr>';
+        totalDiv.textContent = 'Total: $0.00 MXN';
+        return;
+    }
+
+    carrito.forEach((producto, index) => {
+        const subtotal = producto.precio * producto.cantidad;
+        total += subtotal;
+
+        const fila = document.createElement('tr');
+        fila.innerHTML = `
+            <td>${producto.nombre}</td>
+            <td>$${producto.precio.toFixed(2)} MXN</td>
+            <td>
+                <input type="number" min="1" value="${producto.cantidad}" 
+                onchange="actualizarCantidad(${index}, this.value)">
+            </td>
+            <td>$<span id="subtotal-${index}">${subtotal.toFixed(2)}</span> MXN</td>
+            <td><button onclick="eliminarProducto(${index})">❌</button></td>
+        `;
+        tbody.appendChild(fila);
+    });
+
+    totalDiv.textContent = `Total: $${total.toFixed(2)} MXN`;
+        // Cálculo del resumen
+    const subtotal = total;
+    const iva = subtotal * 0.16;
+    const totalFinal = subtotal + iva;
+
+    document.getElementById('subtotal').textContent = subtotal.toFixed(2);
+    document.getElementById('iva').textContent = iva.toFixed(2);
+    document.getElementById('total-general').textContent = totalFinal.toFixed(2);
+
+}
+function actualizarCantidad(index, nuevaCantidad) {
+    let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+
+    // Evitar valores negativos o vacíos
+    if (nuevaCantidad < 1) return;
+
+    // Actualizar cantidad
+    carrito[index].cantidad = parseInt(nuevaCantidad);
+    
+    // Guardar en localStorage
+    localStorage.setItem('carrito', JSON.stringify(carrito));
+
+    // Recargar el carrito para reflejar los cambios
+    cargarCarrito();
+}
+function eliminarProducto(index) {
+    let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+
+    // Confirmar eliminación
+    if (confirm(`¿Quieres eliminar "${carrito[index].nombre}" del carrito?`)) {
+        carrito.splice(index, 1);
+        localStorage.setItem('carrito', JSON.stringify(carrito));
+        cargarCarrito();
+    }
+}
+
+
+        function limpiarCarrito() {
+            if (confirm('¿Estás seguro de que deseas vaciar el carrito?')) {
+                localStorage.removeItem('carrito');
+                cargarCarrito();
+            }
+        }
+
+        // Cargar carrito al abrir la página
+        window.onload = cargarCarrito;
+
+      function vaciarCarrito() {
+    localStorage.removeItem('carrito');
+    cargarCarrito();
+
+    // Limpia también los valores de subtotal, IVA y total
+    document.getElementById('subtotal').textContent = '0.00';
+    document.getElementById('iva').textContent = '0.00';
+    document.getElementById('total-general').textContent = '0.00';
+}
+
+function confirmarCompra() {
+    // Guarda temporalmente el resumen en localStorage
+    const subtotal = document.getElementById('subtotal').textContent;
+    const iva = document.getElementById('iva').textContent;
+    const total = document.getElementById('total-general').textContent;
+
+    const resumen = {
+        subtotal,
+        iva,
+        total
+    };
+
+    localStorage.setItem('resumenCompra', JSON.stringify(resumen));
+
+    // Redirige a la nueva página
+    window.location.href = 'confirmacion.html';
+}
+
+    </script>
+</body>
+</html>
