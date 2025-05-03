@@ -134,6 +134,41 @@
       </div>
     </div>
   </section>
+
+  <section class="faq-section" style="max-width: 1000px; margin: 40px auto;">
+  <h2 style="color: #31D4AF;">Preguntas Frecuentes</h2>
+  <div style="margin-top: 20px;">
+    <h4 class="faq-question" style="color: #333;">1. ¿Cuánto tarda en llegar mi pedido?</h4>
+    <p class="faq-answer" style="display: none;">El tiempo de entrega estimado es de 3 a 7 días hábiles dependiendo de tu ubicación.</p>
+
+    <h4 class="faq-question" style="color: #333;">2. ¿Cómo puedo hacer válida la garantía?</h4>
+    <p class="faq-answer" style="display: none;">Solo necesitas enviar tu número de pedido y una descripción del problema a nuestro correo de soporte.</p>
+
+    <h4 class="faq-question" style="color: #333;">3. ¿Puedo devolver un producto?</h4>
+    <p class="faq-answer" style="display: none;">Sí, aceptamos devoluciones dentro de los primeros 15 días después de la entrega. Consulta nuestra política de devoluciones en el sitio.</p>
+
+    <h4 class="faq-question" style="color: #333;">4. ¿Ofrecen soporte técnico para los dispositivos IoT?</h4>
+    <p class="faq-answer" style="display: none;">Sí, puedes contactarnos vía correo o WhatsApp para asistencia personalizada con tus dispositivos inteligentes.</p>
+
+    <h4 class="faq-question" style="color: #333;">5. ¿Dónde puedo consultar el manual de mi producto?</h4>
+    <p class="faq-answer" style="display: none;">Los manuales están disponibles en nuestra página de catálogo, en cada ficha de producto.</p>
+  </div>
+</section>
+
+<script>
+  // Seleccionamos todas las preguntas y les agregamos el evento de clic
+  const questions = document.querySelectorAll('.faq-question');
+  
+  questions.forEach((question) => {
+    question.addEventListener('click', () => {
+      // Toggle para mostrar/ocultar la respuesta
+      const answer = question.nextElementSibling;
+      answer.style.display = answer.style.display === 'none' ? 'block' : 'none';
+    });
+  });
+</script>
+
+  
 <section class="redes">
             <a href="https://api.whatsapp.com/send/?phone=527841183967" target="_blank">
                 <img src="img/wasap.png" alt="WhatsApp" width="50">
