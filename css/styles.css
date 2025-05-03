@@ -201,6 +201,8 @@ footer {
 }
 
 .miembro {
+     width: 150px;
+    height: 150px;
     background-color: #e8f5e9;
     padding: 20px;
     border-radius: 12px;
