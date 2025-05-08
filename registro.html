@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>PotSync - Registro</title>
+    <link rel="stylesheet" href="css/carrito.css">
+    <script src="https://www.gstatic.com/firebasejs/11.7.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/11.7.1/firebase-auth.js"></script>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 500px;
+            background-color: #fff;
+            margin: 50px auto;
+            padding: 30px 40px;
+            border-radius: 15px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+        }
+
+        h1, h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        label {
+            margin-top: 15px;
+            display: block;
+            color: #444;
+            font-weight: 500;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 14px;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: #2ecc71;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            margin-top: 25px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #27ae60;
+        }
+    </style>
+</head>
+<body>
+
+ <header>
+        <a href="index.html">
+            <img id="logo" src="img/potsync.png" alt="Logo PotSync">
+        </a>
+        <div>
+            <h1>PotSync</h1>
+            <h3>Innovación verde, conectividad inteligente</h3>
+        </div>
+    </header>
+
+    <nav>
+        <div class="nav-links">
+            <a href="index.html">Inicio</a>
+            <a href="catalogo.html">Catálogo</a>
+            <a href="equipo.html">Equipo</a>
+            <a href="contacto.html">Contacto</a>
+            <a href="registro.html"><h3>Autenticarse</h3></a>
+        </div>
+        <a href="carrito.html"><h3>🛒 Ver Carrito</h3></a>
+    </nav>
+
+    <div class="container">
+        <h1>Bienvenido a PotSync</h1>
+        <h2>Registro</h2>
+        <label for="regEmail">Correo electrónico:</label>
+        <input type="email" id="regEmail" placeholder="Correo electrónico" required>
+
+        <label for="regPassword">Contraseña:</label>
+        <input type="password" id="regPassword" placeholder="Contraseña" required>
+
+        <button onclick="registrarUsuario()">Registrarse</button>
+
+        <h2>Iniciar Sesión</h2>
+        <label for="loginEmail">Correo electrónico:</label>
+        <input type="email" id="loginEmail" placeholder="Correo electrónico" required>
+
+        <label for="loginPassword">Contraseña:</label>
+        <input type="password" id="loginPassword" placeholder="Contraseña" required>
+
+        <button onclick="iniciarSesion()">Iniciar sesión</button>
+    </div>
+
+    <script type="module">
+
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+
+        function registrarUsuario() {
+            const email = document.getElementById('regEmail').value;
+            const password = document.getElementById('regPassword').value;
+
+            auth.createUserWithEmailAndPassword(email, password)
+                .then((userCredential) => {
+                    alert("¡Registro exitoso! Bienvenido a PotSync ❤️");
+                    // Aquí podrías usar EmailJS para enviar un correo real
+                })
+                .catch((error) => {
+                    alert("Error: " + error.message);
+                });
+        }
+
+        function iniciarSesion() {
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+
+            auth.signInWithEmailAndPassword(email, password)
+                .then((userCredential) => {
+                    alert("¡Inicio de sesión exitoso!");
+                    // window.location.href = 'dashboard.html'; // Si quieres redirigir
+                })
+                .catch((error) => {
+                    alert("Error: " + error.message);
+                });
+        }
+        // Import the functions you need from the SDKs you need
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/11.7.1/firebase-app.js";
+  // TODO: Add SDKs for Firebase products that you want to use
+  // https://firebase.google.com/docs/web/setup#available-libraries
+
+  // Your web app's Firebase configuration
+  const firebaseConfig = {
+    apiKey: "AIzaSyA4ZDxFqu0I6QsXXR2T0M4zCRaHR5O2c0g",
+    authDomain: "potsyncauth.firebaseapp.com",
+    projectId: "potsyncauth",
+    storageBucket: "potsyncauth.firebasestorage.app",
+    messagingSenderId: "592283837864",
+    appId: "1:592283837864:web:81baa162e351d0a881e99d"
+  };
+    </script>
+</body>
+</html>
