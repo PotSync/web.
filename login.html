@@ -98,35 +98,43 @@
             <label for="email">Correo electrónico:</label>
             <input type="email" id="email" required>
 
-            <label for="direccion">Dirección de envío:</label>
-            <input type="text" id="direccion" required>
-
-            <label for="metodo">Método de pago:</label>
-            <select id="metodo" required>
-                <option value="">-- Selecciona un método --</option>
-                <option value="tarjeta">Tarjeta de crédito/débito</option>
-                <option value="paypal">PayPal</option>
-                <option value="oxxo">OXXO</option>
             </select>
 
-            <button type="submit">Confirmar Compra</button>
+            <button type="submit">Login</button>
         </form>
     </div>
-
     <script>
-        function procesarPago(event) {
-            event.preventDefault();
+    function procesarPago(event) {
+        event.preventDefault();
 
-            const datosPago = {
-                nombre: document.getElementById('nombre').value,
-                email: document.getElementById('email').value,
-                direccion: document.getElementById('direccion').value,
-                metodo: document.getElementById('metodo').value
-            };
+        const nombre = document.getElementById('nombre').value;
+        const email = document.getElementById('email').value;
 
-            localStorage.setItem('datosPago', JSON.stringify(datosPago));
-            window.location.href = 'final.html';
-        }
-    </script>
+        // Datos para EmailJS
+        const templateParams = {
+            user_name: nombre,
+            user_email: email
+        };
+
+        emailjs.send("NENyKRR8XolRfwBZLx86X", "template_1goh9bd", templateParams)
+            .then(function(response) {
+                console.log("Correo enviado con éxito", response.status, response.text);
+                alert("¡Te has registrado correctamente! Se ha enviado un correo de confirmación.");
+                localStorage.setItem('datosPago', JSON.stringify({ nombre, email }));
+                window.location.href = 'final.html';
+            }, function(error) {
+                console.log("Error al enviar el correo", error);
+                alert("Error al enviar el correo de confirmación.");
+            });
+    }
+</script>
+
+
+    
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+<script>
+    emailjs.init("NENyKRR8XolRfwBZLx86X"); // Reemplaza con tu User ID de EmailJS
+</script>
+
 </body>
 </html>
