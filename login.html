@@ -3,66 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <title>Login</title>
-     <link rel="stylesheet" href="css/carrito.css">
+    <link rel="stylesheet" href="css/carrito.css">
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <script>
+        (function(){
+            emailjs.init("YOUR_USER_ID"); // 🔁 Reemplaza con tu User ID
+        })();
+    </script>
     <style>
-        * {
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Segoe UI', sans-serif;
-            background-color: #f2f2f2;
-            margin: 0;
-            padding: 0;
-        }
-
-        .container {
-            max-width: 500px;
-            background-color: #fff;
-            margin: 50px auto;
-            padding: 30px 40px;
-            border-radius: 15px;
-            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
-        }
-
-        h1 {
-            text-align: center;
-            margin-bottom: 30px;
-            color: #333;
-        }
-
-        label {
-            margin-top: 15px;
-            display: block;
-            color: #444;
-            font-weight: 500;
-        }
-
-        input, select {
-            width: 100%;
-            padding: 10px;
-            margin-top: 5px;
-            border: 1px solid #ccc;
-            border-radius: 8px;
-            font-size: 14px;
-        }
-
-        button {
-            width: 100%;
-            padding: 12px;
-            background-color: #2ecc71;
-            color: white;
-            border: none;
-            border-radius: 10px;
-            font-size: 16px;
-            margin-top: 25px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-
-        button:hover {
-            background-color: #27ae60;
-        }
+        /* (Todo tu estilo original aquí) */
     </style>
 </head>
 <body>
@@ -82,8 +31,6 @@
             <a href="catalogo.html">Catálogo</a>
             <a href="equipo.html">Equipo</a>
             <a href="contacto.html">Contacto</a>
-            
-
         </div>
         <a href="carrito.html"><h3>🛒 Ver Carrito</h3></a>
     </nav>
@@ -93,48 +40,38 @@
 
         <form id="form-pago" onsubmit="procesarPago(event)">
             <label for="nombre">Nombre completo:</label>
-            <input type="text" id="nombre" required>
+            <input type="text" id="nombre" name="nombre" required>
 
             <label for="email">Correo electrónico:</label>
-            <input type="email" id="email" required>
-
-            </select>
+            <input type="email" id="email" name="email" required>
 
             <button type="submit">Login</button>
         </form>
     </div>
+
     <script>
-    function procesarPago(event) {
-        event.preventDefault();
+        function procesarPago(event) {
+            event.preventDefault();
 
-        const nombre = document.getElementById('nombre').value;
-        const email = document.getElementById('email').value;
+            const nombre = document.getElementById('nombre').value;
+            const email = document.getElementById('email').value;
 
-        // Datos para EmailJS
-        const templateParams = {
-            user_name: nombre,
-            user_email: email
-        };
-
-        emailjs.send("NENyKRR8XolRfwBZLx86X", "template_1goh9bd", templateParams)
+            // Enviar correo con EmailJS
+            emailjs.send("YOUR_SERVICE_ID", "YOUR_TEMPLATE_ID", {
+                nombre: nombre,
+                email: email
+            })
             .then(function(response) {
-                console.log("Correo enviado con éxito", response.status, response.text);
-                alert("¡Te has registrado correctamente! Se ha enviado un correo de confirmación.");
+                console.log("Correo enviado:", response.status, response.text);
+                alert("Te has registrado correctamente. Revisa tu correo.");
                 localStorage.setItem('datosPago', JSON.stringify({ nombre, email }));
                 window.location.href = 'final.html';
             }, function(error) {
-                console.log("Error al enviar el correo", error);
-                alert("Error al enviar el correo de confirmación.");
+                console.error("Error al enviar:", error);
+                alert("Ocurrió un error al enviar el correo.");
             });
-    }
-</script>
-
-
-    
-    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
-<script>
-    emailjs.init("NENyKRR8XolRfwBZLx86X"); // Reemplaza con tu User ID de EmailJS
-</script>
-
+        }
+    </script>
 </body>
 </html>
+
