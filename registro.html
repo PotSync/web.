@@ -65,11 +65,32 @@
         button:hover {
             background-color: #27ae60;
         }
+
+        /* Estilos para mensajes de error/éxito */
+        .message {
+            padding: 10px;
+            margin: 15px 0;
+            border-radius: 5px;
+            text-align: center;
+            display: none;
+        }
+
+        .error {
+            background-color: #ffebee;
+            color: #c62828;
+            border: 1px solid #ef9a9a;
+        }
+
+        .success {
+            background-color: #e8f5e9;
+            color: #2e7d32;
+            border: 1px solid #a5d6a7;
+        }
     </style>
 </head>
 <body>
 
- <header>
+    <header>
         <a href="index.html">
             <img id="logo" src="img/potsync.png" alt="Logo PotSync">
         </a>
@@ -92,6 +113,10 @@
 
     <div class="container">
         <h1>Bienvenido a PotSync</h1>
+        
+        <!-- Mensajes de feedback -->
+        <div id="messageBox" class="message"></div>
+        
         <h2>Registro</h2>
         <label for="regEmail">Correo electrónico:</label>
         <input type="email" id="regEmail" placeholder="Correo electrónico" required>
@@ -110,52 +135,113 @@
 
         <button onclick="iniciarSesion()">Iniciar sesión</button>
     </div>
+
     <script>
-    function registrarUsuario() {
-        const email = document.getElementById('regEmail').value.trim();
-        const password = document.getElementById('regPassword').value;
+        // Configuración de Firebase (REEMPLAZA con tus datos)
+        const firebaseConfig = {
+          apiKey: "AIzaSyCUCyhREOAkfu5HuUbvwnbUKUm4ndXL5z4",
+          authDomain: "potsync-6afff.firebaseapp.com",
+          projectId: "potsync-6afff",
+          storageBucket: "potsync-6afff.firebasestorage.app",
+          messagingSenderId: "762271597831",
+          appId: "1:762271597831:web:89004782f651b29c7bf1a2"
+        };
 
-        // Validaciones
-        if (email === '' || password === '') {
-            alert("⚠️ Por favor, completa todos los campos del registro.");
-            return;
+
+        // Inicializa Firebase
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+
+        // Función para mostrar mensajes
+        function showMessage(message, isError = false) {
+            const messageBox = document.getElementById('messageBox');
+            messageBox.textContent = message;
+            messageBox.className = isError ? 'message error' : 'message success';
+            messageBox.style.display = 'block';
+            
+            // Ocultar después de 5 segundos
+            setTimeout(() => {
+                messageBox.style.display = 'none';
+            }, 5000);
         }
 
-        if (password.length < 8) {
-            alert("🔒 La contraseña debe tener al menos 8 caracteres.");
-            return;
+        // Función para registrar usuario
+        function registrarUsuario() {
+            const email = document.getElementById('regEmail').value;
+            const password = document.getElementById('regPassword').value;
+
+            // Validación básica
+            if (!email || !password) {
+                showMessage('Por favor completa todos los campos', true);
+                return;
+            }
+
+            if (password.length < 6) {
+                showMessage('La contraseña debe tener al menos 6 caracteres', true);
+                return;
+            }
+
+            auth.createUserWithEmailAndPassword(email, password)
+                .then((userCredential) => {
+                    showMessage('¡Registro exitoso! Bienvenido a PotSync');
+                    console.log('Usuario registrado:', userCredential.user);
+                    // Redirigir después de registro exitoso
+                    setTimeout(() => {
+                        window.location.href = 'index.html';
+                    }, 2000);
+                })
+                .catch((error) => {
+                    let errorMessage = 'Error al registrar: ';
+                    switch(error.code) {
+                        case 'auth/email-already-in-use':
+                            errorMessage += 'Este correo ya está registrado';
+                            break;
+                        case 'auth/invalid-email':
+                            errorMessage += 'Correo electrónico no válido';
+                            break;
+                        default:
+                            errorMessage += error.message;
+                    }
+                    showMessage(errorMessage, true);
+                    console.error('Error de registro:', error);
+                });
         }
 
-        // Registro en Firebase
-        auth.createUserWithEmailAndPassword(email, password)
-            .then((userCredential) => {
-                alert("✅ ¡Registro exitoso! Bienvenido a PotSync ❤️");
-            })
-            .catch((error) => {
-                alert("❌ Error: " + error.message);
-            });
-    }
+        // Función para iniciar sesión
+        function iniciarSesion() {
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
 
-    function iniciarSesion() {
-        const email = document.getElementById('loginEmail').value.trim();
-        const password = document.getElementById('loginPassword').value;
+            if (!email || !password) {
+                showMessage('Por favor completa todos los campos', true);
+                return;
+            }
 
-        // Validaciones
-        if (email === '' || password === '') {
-            alert("⚠️ Por favor, completa todos los campos para iniciar sesión.");
-            return;
+            auth.signInWithEmailAndPassword(email, password)
+                .then((userCredential) => {
+                    showMessage('¡Inicio de sesión exitoso!');
+                    console.log('Usuario logueado:', userCredential.user);
+                    // Redirigir después de login exitoso
+                    setTimeout(() => {
+                        window.location.href = 'index.html';
+                    }, 2000);
+                })
+                .catch((error) => {
+                    let errorMessage = 'Error al iniciar sesión: ';
+                    switch(error.code) {
+                        case 'auth/user-not-found':
+                            errorMessage += 'Usuario no encontrado';
+                            break;
+                        case 'auth/wrong-password':
+                            errorMessage += 'Contraseña incorrecta';
+                            break;
+                        default:
+                            errorMessage += error.message;
+                    }
+                    showMessage(errorMessage, true);
+                    console.error('Error de autenticación:', error);
+                });
         }
-
-        // Inicio de sesión en Firebase
-        auth.signInWithEmailAndPassword(email, password)
-            .then((userCredential) => {
-                alert("✅ ¡Inicio de sesión exitoso!");
-            })
-            .catch((error) => {
-                alert("❌ Error: " + error.message);
-            });
-    }
-</script>
-
+    </script>
 </body>
 </html>
