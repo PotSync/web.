@@ -5,9 +5,8 @@
     <title>Login</title>
     <link rel="stylesheet" href="css/carrito.css">
     <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
-    <
     <style>
-        /* (Todo tu estilo original aquí) */
+
     </style>
 </head>
 <body>
@@ -33,52 +32,51 @@
 
     <div class="container">
         <div class="row">
-        <h1>Login</h1>
-        <form>
-  <div class="mb-3">
-    <label for="exampleInputEmail1" class="form-label">Nombre</label>
-    <input type="text" class="form-control" placeholder="Nombre" name="name">
-  </div>
-  <div class="mb-3">
-    <label for="exampleInputPassword1" class="form-label">Apellido</label>
-    <input type="text" class="form-control" placeholder="Apellido" name="last">
-  </div>
-  <div class="mb-3">
-    <label for="exampleInputPassword1" class="form-label">Email</label>
-    <input type="email" class="form-control" placeholder="Email" name="email">
-  </div>
-  <input type="submit" class="btn btn-success" id="button" value="ENVIAR MENSAJE" >
-</form>   
-    <script type="text/javascript"
-  src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+            <h1>Login</h1>
+            <form id="form">
+                <div class="mb-3">
+                    <label for="name">Nombre</label>
+                    <input type="text" class="form-control" placeholder="Nombre" name="name" required>
+                </div>
+                <div class="mb-3">
+                    <label for="last">Apellido</label>
+                    <input type="text" class="form-control" placeholder="Apellido" name="last" required>
+                </div>
+                <div class="mb-3">
+                    <label for="email">Email</label>
+                    <input type="email" class="form-control" placeholder="Email" name="email" required>
+                </div>
 
-<script type="text/javascript">
-  emailjs.init('W7_Jcs_mnXWDnr_Yd')
-</script>
+                <input type="hidden" name="mensaje" value="Tu inicio de sesión fue validado correctamente.">
+
+                <input type="submit" class="btn btn-success" id="button" value="ENVIAR MENSAJE">
+            </form>   
+        </div>
     </div>
-    </div>
-</body>
+
     <script>
+        emailjs.init('W7_Jcs_mnXWDnr_Yd'); 
+
         const btn = document.getElementById('button');
 
-document.getElementById('form')
- .addEventListener('submit', function(event) {
-   event.preventDefault();
+        document.getElementById('form').addEventListener('submit', function(event) {
+            event.preventDefault();
 
-   btn.value = 'Enviando...';
+            btn.value = 'Enviando...';
 
-   const serviceID = 'default_service';
-   const templateID = 'template_ntawjr5';
+            const serviceID = 'default_service'; 
+            const templateID = 'template_ntawjr5'; 
 
-   emailjs.sendForm(serviceID, templateID, this)
-    .then(() => {
-      btn.value = 'ENVIAR MENSAJE';
-      alert('Mensaje enviado correctamente!');
-    }, (err) => {
-      btn.value = 'ENVIAR MENSAJE';
-      alert(JSON.stringify(err));
-    });
-});
+            emailjs.sendForm(serviceID, templateID, this)
+                .then(() => {
+                    btn.value = 'ENVIAR MENSAJE';
+                    alert('Mensaje enviado correctamente!');
+                }, (err) => {
+                    btn.value = 'ENVIAR MENSAJE';
+                    alert('Error al enviar el mensaje:\n' + JSON.stringify(err));
+                });
+        });
     </script>
+</body>
 </html>
 
