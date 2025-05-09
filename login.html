@@ -5,11 +5,7 @@
     <title>Login</title>
     <link rel="stylesheet" href="css/carrito.css">
     <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
-    <script>
-        (function(){
-            emailjs.init("NENyKRR8XoIRFwBZLx86X"); // 🔁 Reemplaza con tu User ID
-        })();
-    </script>
+    <
     <style>
         /* (Todo tu estilo original aquí) */
     </style>
@@ -45,33 +41,36 @@
             <label for="email">Correo electrónico:</label>
             <input type="email" id="email" name="email" required>
 
-            <button type="submit">Login</button>
+            <input type="submit" class="btn btn-success" id="button" value="ENVIAR MENSAJE" >
         </form>
-    </div>
+        <script type="text/javascript"
+  src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 
+<script type="text/javascript">
+  emailjs.init('W7_Jcs_mnXWDnr_Yd')
+</script>
+    </div>
+</body>
     <script>
-        function procesarPago(event) {
+        const btn=document.getElementById('button');
+        iocument.getElementById('form')
+        .addEventListener('submit', function(event){
             event.preventDefault();
 
-            const nombre = document.getElementById('nombre').value;
-            const email = document.getElementById('email').value;
+            btn.value='Envienda...';
 
-            // Enviar correo con EmailJS
-            emailjs.send("service_d5n3ubw", "template_1goh9bd", {
-                nombre: nombre,
-                email: email
-            })
-            .then(function(response) {
-                console.log("Correo enviado:", response.status, response.text);
-                alert("Te has registrado correctamente. Revisa tu correo.");
-                localStorage.setItem('datosPago', JSON.stringify({ nombre, email }));
-                window.location.href = 'final.html';
-            }, function(error) {
-                console.error("Error al enviar:", error);
-                alert("Ocurrió un error al enviar el correo.");
+            const serviceId='service_d5n3ubw';
+            const templateID='template_1goh9bd';
+
+            emailjs.sendForm(serviceID, templateID, this)
+            .then(() => {
+                btn.value='ENVIAR MENSAJE';
+                alert('Mensaje enviado correctamente!');
+            },(err) => {
+                btn.value='ENVIAR MENSAJE';
+                alert(JSON.stringify(err));
             });
-        }
+        });
     </script>
-</body>
 </html>
 
