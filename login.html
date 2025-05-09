@@ -32,45 +32,53 @@
     </nav>
 
     <div class="container">
+        <div class="row">
         <h1>Login</h1>
-
-        <form id="form-pago" onsubmit="procesarPago(event)">
-            <label for="nombre">Nombre completo:</label>
-            <input type="text" id="nombre" name="nombre" required>
-
-            <label for="email">Correo electrónico:</label>
-            <input type="email" id="email" name="email" required>
-
-            <input type="submit" class="btn btn-success" id="button" value="ENVIAR MENSAJE" >
-        </form>
-        <script type="text/javascript"
+        <form>
+  <div class="mb-3">
+    <label for="exampleInputEmail1" class="form-label">Nombre</label>
+    <input type="text" class="form-control" placeholder="Nombre" name="name">
+  </div>
+  <div class="mb-3">
+    <label for="exampleInputPassword1" class="form-label">Apellido</label>
+    <input type="text" class="form-control" placeholder="Apellido" name="last">
+  </div>
+  <div class="mb-3">
+    <label for="exampleInputPassword1" class="form-label">Email</label>
+    <input type="email" class="form-control" placeholder="Email" name="email">
+  </div>
+  <input type="submit" class="btn btn-success" id="button" value="ENVIAR MENSAJE" >
+</form>   
+    <script type="text/javascript"
   src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 
 <script type="text/javascript">
   emailjs.init('W7_Jcs_mnXWDnr_Yd')
 </script>
     </div>
+    </div>
 </body>
     <script>
-        const btn=document.getElementById('button');
-        iocument.getElementById('form')
-        .addEventListener('submit', function(event){
-            event.preventDefault();
+        const btn = document.getElementById('button');
 
-            btn.value='Envienda...';
+document.getElementById('form')
+ .addEventListener('submit', function(event) {
+   event.preventDefault();
 
-            const serviceId='service_d5n3ubw';
-            const templateID='template_1goh9bd';
+   btn.value = 'Enviando...';
 
-            emailjs.sendForm(serviceID, templateID, this)
-            .then(() => {
-                btn.value='ENVIAR MENSAJE';
-                alert('Mensaje enviado correctamente!');
-            },(err) => {
-                btn.value='ENVIAR MENSAJE';
-                alert(JSON.stringify(err));
-            });
-        });
+   const serviceID = 'default_service';
+   const templateID = 'template_ntawjr5';
+
+   emailjs.sendForm(serviceID, templateID, this)
+    .then(() => {
+      btn.value = 'ENVIAR MENSAJE';
+      alert('Mensaje enviado correctamente!');
+    }, (err) => {
+      btn.value = 'ENVIAR MENSAJE';
+      alert(JSON.stringify(err));
+    });
+});
     </script>
 </html>
 
