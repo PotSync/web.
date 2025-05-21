@@ -30,6 +30,11 @@
         <a href="carrito.html"><h3>🛒 Ver Carrito</h3></a>
     </nav>
 
+     <div class="promo-banner" id="promoBanner">
+  <a href="catalogo.html">🎉 ¡Tenemos un 10% de descuento en todos nuestros productos durante este mes! 🎉</a>
+  <button class="close-banner" onclick="cerrarBanner()">✖</button>
+</div>
+
     <main>
         <section>
             <h1>Sobre PotSync</h1>
@@ -153,6 +158,10 @@
 
     chatbox.innerHTML += `<p><strong>PotSyncBot:</strong> ${respuesta}</p>`;
     chatbox.scrollTop = chatbox.scrollHeight;
+  }
+         function cerrarBanner() {
+    const banner = document.getElementById("promoBanner");
+    banner.style.display = "none";
   }
 </script>
 
