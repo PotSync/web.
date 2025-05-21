@@ -236,3 +236,42 @@ footer {
   justify-content: center;
   gap: 20px;
 }
+
+.promo-banner {
+  background-color: #ffdd57;
+  color: #333;
+  text-align: center;
+  font-size: 18px;
+  font-weight: bold;
+  padding: 15px 10px;
+  position: relative;
+  border-bottom: 2px solid #f1c40f;
+  animation: slideDown 0.6s ease-out;
+}
+
+.close-banner {
+  position: absolute;
+  right: 15px;
+  top: 10px;
+  background: transparent;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  color: #333;
+}
+
+.close-banner:hover {
+  color: #c0392b;
+}
+
+@keyframes slideDown {
+  from {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
